@@ -1,7 +1,7 @@
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import type { z } from "zod";
+import { z } from "zod";
 
 export const kissesSchema = sqliteTable(
     "kisses",
@@ -23,4 +23,6 @@ export const kissesSchema = sqliteTable(
 export const kissesSelectSchema = createSelectSchema(kissesSchema);
 export const kissesInsertSchema = createInsertSchema(kissesSchema);
 
-export type KissesInsert = z.infer<typeof kissesInsertSchema>;
+export const kissesSelectArraySchema = z.array(kissesSelectSchema);
+
+export type Kisses = z.infer<typeof kissesSelectSchema>;
