@@ -1,7 +1,7 @@
 import { kissesSchema } from "@/db/schema/kisses";
 
 export const schema = {
-  kissesSchema,
+    kissesSchema,
 };
 
 export * from "@/db/schema/kisses";

@@ -11,6 +11,9 @@ export const kissesSchema = sqliteTable(
         createdAt: integer("created_at", { mode: "timestamp" })
             .notNull()
             .default(sql`(unixepoch('now'))`),
+        updatedAt: integer("updated_at", { mode: "timestamp" })
+            .notNull()
+            .default(sql`(unixepoch('now'))`),
     },
     (table) => {
         return [index("idx_kisses_id").on(table.id)];
