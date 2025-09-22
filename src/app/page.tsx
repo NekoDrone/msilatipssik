@@ -1,5 +1,6 @@
 "use client";
 import { KissCounter } from "@/components/KissCounter";
+import { NEXT_PUBLIC_KISS_RECIPIENT } from "@/utils/env";
 
 const IndexPage = () => {
     return (
@@ -10,7 +11,7 @@ const IndexPage = () => {
                     (the reverse of Kisspitalism)
                 </h2>
             </div>
-            <KissCounter name="Harmy" />
+            <KissCounter name={NEXT_PUBLIC_KISS_RECIPIENT} />
         </div>
     );
 };
