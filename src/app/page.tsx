@@ -1,6 +1,7 @@
 "use client";
 import { KissCounter } from "@/components/KissCounter";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { capitaliseFirstLetter } from "@/utils/capitalise";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -20,7 +21,9 @@ const IndexPage = () => {
                 </div>
                 <Suspense fallback=<LoadingSpinner />>
                     {kissRecipient ? (
-                        <KissCounter name={kissRecipient} />
+                        <KissCounter
+                            name={capitaliseFirstLetter(kissRecipient)}
+                        />
                     ) : (
                         <div>
                             <p>Who you gonna kiss???</p>

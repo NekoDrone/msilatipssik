@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useSearchParams } from "next/navigation";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { capitaliseFirstLetter } from "@/utils/capitalise";
 
 export interface LayoutProps {
     children: ReactNode;
@@ -29,7 +30,7 @@ const RootLayoutWrapper: FC<LayoutProps> = ({ children }) => {
                         <title>
                             {kissRecipient === null
                                 ? "Be specific!"
-                                : `${kissRecipient}'s Kiss Debt Counter`}
+                                : `${capitaliseFirstLetter(kissRecipient)}'s Kiss Debt Counter`}
                         </title>
                     </Suspense>
                 </head>
