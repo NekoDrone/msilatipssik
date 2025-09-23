@@ -39,7 +39,10 @@ export const KissCounter = ({ name }: { name: string }) => {
             ) : (
                 <div className="flex flex-col items-center gap-4">
                     <p className="">
-                        {name} is {kisses.length}{" "}
+                        {name} is{" "}
+                        <span className="text-ctp-mauve font-semibold underline">
+                            {kisses.length}
+                        </span>{" "}
                         {kisses.length === 1 ? "kiss" : "kisses"} in debt
                     </p>
                     <div className="flex flex-col items-center gap-2">
@@ -49,17 +52,21 @@ export const KissCounter = ({ name }: { name: string }) => {
                                     key={idx}
                                     className="flex w-full justify-start gap-4 text-sm"
                                 >
-                                    <p>{kisses.length - idx}.</p>
+                                    <p className="text-ctp-green">
+                                        {kisses.length - idx}.
+                                    </p>
                                     <div className="flex gap-1">
                                         <p>{kiss.reason},</p>
                                         <p>
                                             on{" "}
-                                            {kiss.updatedAt.toLocaleDateString(
-                                                "en-SG",
-                                                {
-                                                    weekday: "long",
-                                                },
-                                            )}
+                                            <span className="text-ctp-red">
+                                                {kiss.updatedAt.toLocaleDateString(
+                                                    "en-SG",
+                                                    {
+                                                        weekday: "long",
+                                                    },
+                                                )}
+                                            </span>
                                             {", the "}
                                             {kiss.updatedAt.toLocaleDateString(
                                                 "en-SG",
@@ -70,7 +77,7 @@ export const KissCounter = ({ name }: { name: string }) => {
                                             {(() => {
                                                 const dayNumber =
                                                     kiss.updatedAt.getDate();
-                                                switch (dayNumber) {
+                                                switch (dayNumber % 10) {
                                                     case 1:
                                                         return "st";
                                                     case 2:
