@@ -1,8 +1,12 @@
 "use client";
 import { KissCounter } from "@/components/KissCounter";
-import { NEXT_PUBLIC_KISS_RECIPIENT } from "@/utils/env";
+import { useSearchParams } from "next/navigation";
 
 const IndexPage = () => {
+    const searchParams = useSearchParams();
+
+    const kissRecipient = searchParams.get("recipient");
+
     return (
         <div className="bg-ctp-base flex min-h-screen flex-col items-center justify-center gap-8">
             <div className="flex flex-col items-center gap-1">
@@ -11,7 +15,13 @@ const IndexPage = () => {
                     (the reverse of Kisspitalism)
                 </h2>
             </div>
-            <KissCounter name={NEXT_PUBLIC_KISS_RECIPIENT} />
+            {kissRecipient ? (
+                <KissCounter name={kissRecipient} />
+            ) : (
+                <div>
+                    <p>Who you gonna kiss???</p>
+                </div>
+            )}
         </div>
     );
 };

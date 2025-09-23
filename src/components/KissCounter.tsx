@@ -4,9 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 
 export const KissCounter = ({ name }: { name: string }) => {
     const kissesQuery = useQuery({
-        queryKey: ["kisses"],
+        queryKey: ["kisses", name],
         queryFn: async () => {
-            const req = new Request("/api/kisses", { method: "GET" });
+            const req = new Request(`/api/kisses?recipient=${name}`, {
+                method: "GET",
+            });
             const res = await fetch(req);
             const body: unknown = await res.json();
             const {

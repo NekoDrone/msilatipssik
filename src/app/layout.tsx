@@ -5,7 +5,7 @@ import type { FC, ReactNode } from "react";
 import { lexend } from "@/utils/styles/font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { NEXT_PUBLIC_KISS_RECIPIENT } from "@/utils/env";
+import { useSearchParams } from "next/navigation";
 
 export interface LayoutProps {
     children: ReactNode;
@@ -14,13 +14,19 @@ export interface LayoutProps {
 const RootLayout: FC<LayoutProps> = ({ children }) => {
     const reactQuery = new QueryClient();
 
+    const searchParams = useSearchParams();
+
+    const kissRecipient = searchParams.get("recipient");
+
     return (
         <html lang="en">
             <head>
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width" />
                 <title>
-                    {NEXT_PUBLIC_KISS_RECIPIENT}&apos;s Kiss Debt Counter
+                    {kissRecipient === null
+                        ? "Be specific!"
+                        : `${kissRecipient}'s Kiss Debt Counter`}
                 </title>
             </head>
             <body
