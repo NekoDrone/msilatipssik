@@ -12,7 +12,7 @@ export interface LayoutProps {
     children: ReactNode;
 }
 
-const RootLayout: FC<LayoutProps> = ({ children }) => {
+const RootLayoutWrapper: FC<LayoutProps> = ({ children }) => {
     const reactQuery = new QueryClient();
 
     const searchParams = useSearchParams();
@@ -44,6 +44,14 @@ const RootLayout: FC<LayoutProps> = ({ children }) => {
                     </Suspense>
                 </body>
             </html>
+        </Suspense>
+    );
+};
+
+const RootLayout: FC<LayoutProps> = ({ children }) => {
+    return (
+        <Suspense>
+            <RootLayoutWrapper>{children}</RootLayoutWrapper>
         </Suspense>
     );
 };
