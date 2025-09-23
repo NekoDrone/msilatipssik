@@ -6,6 +6,7 @@ import { lexend } from "@/utils/styles/font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useSearchParams } from "next/navigation";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export interface LayoutProps {
     children: ReactNode;
@@ -34,10 +35,12 @@ const RootLayout: FC<LayoutProps> = ({ children }) => {
             <body
                 className={`${lexend.className} bg-ctp-base text-ctp-text font-light antialiased`}
             >
-                <QueryClientProvider client={reactQuery}>
-                    {children}
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </QueryClientProvider>
+                <Suspense fallback=<LoadingSpinner />>
+                    <QueryClientProvider client={reactQuery}>
+                        {children}
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </QueryClientProvider>
+                </Suspense>
             </body>
         </html>
     );
