@@ -5,6 +5,7 @@ import type { FC, ReactNode } from "react";
 import { lexend } from "@/utils/styles/font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { NEXT_PUBLIC_KISS_RECIPIENT } from "@/utils/env";
 
 export interface LayoutProps {
     children: ReactNode;
@@ -18,7 +19,9 @@ const RootLayout: FC<LayoutProps> = ({ children }) => {
             <head>
                 <meta charSet="UTF-8" />
                 <meta name="viewport" content="width=device-width" />
-                <title>Create Syl&apos;s App</title>
+                <title>
+                    {NEXT_PUBLIC_KISS_RECIPIENT}&apos;s Kiss Debt Counter
+                </title>
             </head>
             <body
                 className={`${lexend.className} bg-ctp-base text-ctp-text font-light antialiased`}
