@@ -43,13 +43,13 @@ export const KissCounter = ({ name }: { name: string }) => {
                         {kisses.length === 1 ? "kiss" : "kisses"} in debt
                     </p>
                     <div className="flex flex-col items-center gap-2">
-                        {kisses.map((kiss) => {
+                        {kisses.map((kiss, idx) => {
                             return (
                                 <div
-                                    key={kiss.id}
+                                    key={idx}
                                     className="flex w-full justify-start gap-4 text-sm"
                                 >
-                                    <p>{kiss.id}.</p>
+                                    <p>{kisses.length - idx}.</p>
                                     <div className="flex gap-1">
                                         <p>{kiss.reason},</p>
                                         <p>
