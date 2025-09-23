@@ -1,6 +1,8 @@
 "use client";
 import { KissCounter } from "@/components/KissCounter";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const IndexPage = () => {
     const searchParams = useSearchParams();
@@ -15,13 +17,15 @@ const IndexPage = () => {
                     (the reverse of Kisspitalism)
                 </h2>
             </div>
-            {kissRecipient ? (
-                <KissCounter name={kissRecipient} />
-            ) : (
-                <div>
-                    <p>Who you gonna kiss???</p>
-                </div>
-            )}
+            <Suspense fallback=<LoadingSpinner />>
+                {kissRecipient ? (
+                    <KissCounter name={kissRecipient} />
+                ) : (
+                    <div>
+                        <p>Who you gonna kiss???</p>
+                    </div>
+                )}
+            </Suspense>
         </div>
     );
 };
