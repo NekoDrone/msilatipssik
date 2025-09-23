@@ -20,29 +20,31 @@ const RootLayout: FC<LayoutProps> = ({ children }) => {
     const kissRecipient = searchParams.get("recipient");
 
     return (
-        <html lang="en">
-            <head>
-                <meta charSet="UTF-8" />
-                <meta name="viewport" content="width=device-width" />
-                <Suspense fallback={<title>Loading...</title>}>
-                    <title>
-                        {kissRecipient === null
-                            ? "Be specific!"
-                            : `${kissRecipient}'s Kiss Debt Counter`}
-                    </title>
-                </Suspense>
-            </head>
-            <body
-                className={`${lexend.className} bg-ctp-base text-ctp-text font-light antialiased`}
-            >
-                <Suspense fallback=<LoadingSpinner />>
-                    <QueryClientProvider client={reactQuery}>
-                        {children}
-                        <ReactQueryDevtools initialIsOpen={false} />
-                    </QueryClientProvider>
-                </Suspense>
-            </body>
-        </html>
+        <Suspense>
+            <html lang="en">
+                <head>
+                    <meta charSet="UTF-8" />
+                    <meta name="viewport" content="width=device-width" />
+                    <Suspense fallback={<title>Loading...</title>}>
+                        <title>
+                            {kissRecipient === null
+                                ? "Be specific!"
+                                : `${kissRecipient}'s Kiss Debt Counter`}
+                        </title>
+                    </Suspense>
+                </head>
+                <body
+                    className={`${lexend.className} bg-ctp-base text-ctp-text font-light antialiased`}
+                >
+                    <Suspense fallback=<LoadingSpinner />>
+                        <QueryClientProvider client={reactQuery}>
+                            {children}
+                            <ReactQueryDevtools initialIsOpen={false} />
+                        </QueryClientProvider>
+                    </Suspense>
+                </body>
+            </html>
+        </Suspense>
     );
 };
 
