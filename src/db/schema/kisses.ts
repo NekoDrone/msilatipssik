@@ -20,7 +20,10 @@ export const kissesSchema = sqliteTable(
     },
 );
 
-export const kissesSelectSchema = createSelectSchema(kissesSchema);
+export const kissesSelectSchema = createSelectSchema(kissesSchema, {
+    updatedAt: z.coerce.date(),
+    createdAt: z.coerce.date(),
+});
 export const kissesInsertSchema = createInsertSchema(kissesSchema);
 
 export const kissesSelectArraySchema = z.array(kissesSelectSchema);
