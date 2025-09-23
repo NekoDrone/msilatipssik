@@ -1,11 +1,11 @@
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { kissesSelectArraySchema, type Kisses } from "@/db/schema";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const KissCounter = ({ name }: { name: string }) => {
-    const [kisses, setKisses] = useState<Kisses[] | undefined>();
-
-    useEffect(() => {
-        const fetchAndSave = async () => {
+    const kissesQuery = useQuery({
+        queryKey: ["kisses"],
+        queryFn: async () => {
             const req = new Request("/api/kisses", { method: "GET" });
             const res = await fetch(req);
             const body: unknown = await res.json();
@@ -18,27 +18,79 @@ export const KissCounter = ({ name }: { name: string }) => {
                 console.log(error);
                 return [] as Kisses[];
             }
-            return kisses;
-        };
-
-        fetchAndSave()
-            .then((kisses) => {
-                setKisses(kisses);
-            })
-            .catch((e: unknown) => {
-                console.log(e);
+            return kisses.toSorted((a, b) => {
+                return b.id - a.id;
             });
-    }, []);
+        },
+    });
+
+    const { data: kisses, error, isPending } = kissesQuery;
+
     return (
         <div>
-            {kisses && (
+            {isPending ? (
+                <LoadingSpinner />
+            ) : error ? (
                 <div>
-                    <div>
-                        {name} is {kisses.length} kisses in debt.
-                    </div>
+                    {error.name}: {error.message}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center gap-4">
+                    <p className="">
+                        {name} is {kisses.length}{" "}
+                        {kisses.length === 1 ? "kiss" : "kisses"} in debt
+                    </p>
                     <div className="flex flex-col items-center gap-2">
                         {kisses.map((kiss) => {
-                            return <div key={kiss.id}>{kiss.reason}</div>;
+                            return (
+                                <div
+                                    key={kiss.id}
+                                    className="flex w-full justify-start gap-4 text-sm"
+                                >
+                                    <p>{kiss.id}.</p>
+                                    <div className="flex gap-1">
+                                        <p>{kiss.reason},</p>
+                                        <p>
+                                            on{" "}
+                                            {kiss.updatedAt.toLocaleDateString(
+                                                "en-SG",
+                                                {
+                                                    weekday: "long",
+                                                },
+                                            )}
+                                            {", the "}
+                                            {kiss.updatedAt.toLocaleDateString(
+                                                "en-SG",
+                                                {
+                                                    day: "numeric",
+                                                },
+                                            )}
+                                            {(() => {
+                                                const dayNumber =
+                                                    kiss.updatedAt.getDate();
+                                                switch (dayNumber) {
+                                                    case 1:
+                                                        return "st";
+                                                    case 2:
+                                                        return "nd";
+                                                    case 3:
+                                                        return "rd";
+                                                    default:
+                                                        return "th";
+                                                }
+                                            })()}
+                                            {" of "}
+                                            {kiss.updatedAt.toLocaleDateString(
+                                                "en-SG",
+                                                {
+                                                    month: "long",
+                                                    year: "numeric",
+                                                },
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
                         })}
                     </div>
                 </div>
